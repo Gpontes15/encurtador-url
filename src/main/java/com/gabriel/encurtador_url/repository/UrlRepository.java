@@ -6,7 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UrlRepository extends JpaRepository<UrlEntity, String> {
-    // Só de estender JpaRepository, você já ganha:
-    // .save(), .findById(), .findAll(), .delete()
-    // Sem escrever NENHUMA linha de SQL!
+   
 }

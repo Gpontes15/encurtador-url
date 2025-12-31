@@ -37,9 +37,7 @@ public class UrlService {
         return shortCode;
     }
 
-    // --- LÓGICA 2: RECUPERAR URL (A MÁGICA DO CACHE) ---
     public String getOriginalUrl(String shortCode) {
-        // 1. Tenta pegar do Redis (Memória RAM - Muito rápido) ⚡
         String cachedUrl = redisTemplate.opsForValue().get(shortCode);
         
         if (cachedUrl != null) {
@@ -47,14 +45,11 @@ public class UrlService {
             return cachedUrl;
         }
 
-        // 2. Se não achou no Redis, busca no Banco (Disco - Mais lento) 🐢
         System.out.println("🐢 Cache MISS! (Buscando no Banco de Dados: " + shortCode + ")");
         
         UrlEntity urlEntity = urlRepository.findById(shortCode)
                 .orElseThrow(() -> new RuntimeException("URL não encontrada"));
 
-        // 3. Achou no banco? Salva no Redis agora! 
-        // Assim, o próximo usuário que pedir esse link vai cair no "Cache HIT"
         redisTemplate.opsForValue().set(shortCode, urlEntity.getOriginalUrl(), 10, TimeUnit.MINUTES);
 
         return urlEntity.getOriginalUrl();

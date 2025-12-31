@@ -10,19 +10,18 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "urls")
-@Data // O Lombok cria os Getters, Setters e toString() sozinho
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class UrlEntity {
 
     @Id
-    private String id; // Este será o nosso "Código Curto" (ex: a7X9b2)
+    private String id;
     
-    private String originalUrl; // A URL gigante original
+    private String originalUrl;
     
-    private LocalDateTime createdAt = LocalDateTime.now(); // Para saber quando foi criado
+    private LocalDateTime createdAt = LocalDateTime.now();
 
-    // Construtor personalizado para facilitar
     public UrlEntity(String id, String originalUrl) {
         this.id = id;
         this.originalUrl = originalUrl;
